@@ -4,14 +4,17 @@ interface IRectSize {
 }
 
 interface ICard {
-    x: number,
-    y: number,
+    x?: number,
+    y?: number,
     size: IRectSize,
-    title?: string,
+    text: string,
+    strokeWidth: number,
+    fontSize: number,
     scale: number,
 }
 
-export {
+
+export type {
     IRectSize,
-    ICard
+    ICard,
 }

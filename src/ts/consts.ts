@@ -10,8 +10,8 @@ const branchSize: IRectSize = {
 };
 
 const unitSize: IRectSize = {
-    width: (branchSize.width - 40) / 4,
-    height: (branchSize.height - 40) / 4
+    width: (branchSize.width - 50) / 2,
+    height: (branchSize.height - 50) / 2
 };
 
 

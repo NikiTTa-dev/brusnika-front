@@ -1,26 +1,29 @@
-import {Rect} from "react-konva";
+import {Group, Rect, Text} from "react-konva";
 import {FC} from "react";
 import {ICard} from "../ts/interfaces.ts";
 import {borderColor} from "../ts/consts.ts";
 
 
-const Item: FC<ICard> = ({x, y, size, scale}) => {
+const Item: FC<ICard> = (props) => {
+    const {text, size, strokeWidth, fontSize, scale} = props;
+    const {width, height} = size;
+
     return (
         <>
             <Rect
-                x={x}
-                y={y}
-                width={size.width}
-                height={size.height}
+                width={width}
+                height={height}
                 stroke={borderColor}
-                strokeWidth={scale}
+                strokeWidth={strokeWidth}
             />
-            {/*<Rect*/}
-            {/*    x={x + 10} y={y - 6}*/}
-            {/*    width={100}*/}
-            {/*    height={20}*/}
-            {/*    fill='white'*/}
-            {/*/>*/}
+
+            {
+                scale * width < 1200 &&
+                <Group x={width * 0.05} y={-strokeWidth / 2}>
+                    <Rect width={width * 0.4} y={-strokeWidth / 2} height={strokeWidth * 2} fill='white'/>
+                    <Text x={width * 0.01} y={-fontSize} text={text} width={width * 0.4} fontSize={fontSize}/>
+                </Group>
+            }
         </>
     );
 };

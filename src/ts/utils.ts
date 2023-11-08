@@ -1,6 +1,6 @@
 import {IRectSize} from "./interfaces.ts";
 
-const getCardsGrid = (rows: number, columns: number, size: IRectSize, gap: number) => {
+const getGrid = (rows: number, columns: number, size: IRectSize, gap: number) => {
     const cards = [];
     for (let row = 0; row < rows; row++) {
         for (let col = 0; col < columns; col++) {
@@ -13,15 +13,23 @@ const getCardsGrid = (rows: number, columns: number, size: IRectSize, gap: numbe
 };
 
 
+const getCentredPosX = (x, width, childWidth, childGap, columns) =>
+    (width - ((columns - 1) * childGap + columns * childWidth)) / 2 + x;
+
+const getCentredPosY = (y, height, childHeight, childGap, rows) =>
+    (height - ((rows - 1) * childGap + rows * childHeight)) / 2 + y;
+
+
 const getRelativeSize = (parentSize: IRectSize, part: number): IRectSize =>
     ({
         width: parentSize.width * part,
         height: parentSize.height * part
     });
 
-
 export {
-    getCardsGrid,
-    getRelativeSize
+    getGrid,
+    getRelativeSize,
+    getCentredPosX,
+    getCentredPosY
 }
 
