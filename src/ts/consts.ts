@@ -1,24 +1,128 @@
-import {IRectSize} from "./interfaces.ts";
-
 const borderColor: string = '#C2C2C2';
 const width: number = window.innerWidth;
 const height: number = window.innerHeight;
 
-const branchSize: IRectSize = {
-    width: (width - 140) / 3,
-    height: (height - 140) / 3
-};
-
-const unitSize: IRectSize = {
-    width: (branchSize.width - 50) / 2,
-    height: (branchSize.height - 50) / 2
+const DATA = {
+    info: {
+        gap: 30
+    },
+    data: [
+        {
+            text: 'Филиал 1',
+            children: {
+                info: {
+                    gap: 20,
+                },
+                data: [
+                    {
+                        text: 'Подразделение 1',
+                        children: {
+                            info: {
+                                gap: 10
+                            },
+                            data: [
+                                {
+                                    text: 'Отделов 1',
+                                    children: null
+                                },
+                            ]
+                        }
+                    },
+                    {
+                        text: 'Подразделение 2',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 3',
+                        children: null
+                    },
+                ]
+            }
+        },
+        {
+            text: 'Филиал 2',
+            children: {
+                info: {
+                    gap: 20
+                },
+                data: [
+                    {
+                        text: 'Подразделение 1',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 2',
+                        children: null
+                    }
+                ]
+            }
+        },
+        {
+            text: 'Филиал 3',
+            children: {
+                info: {
+                    gap: 20,
+                },
+                data: [
+                    {
+                        text: 'Подразделение 1',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 2',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 3',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 1',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 2',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 3',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 1',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 2',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 3',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 1',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 2',
+                        children: null
+                    },
+                    {
+                        text: 'Подразделение 3',
+                        children: null
+                    },
+                    
+                ]
+            }
+        },
+    ]
 };
 
 
 export {
+    DATA,
     borderColor,
     width,
     height,
-    branchSize,
-    unitSize
 }

@@ -12,7 +12,6 @@ const getGrid = (rows: number, columns: number, size: IRectSize, gap: number) =>
     return cards
 };
 
-
 const getCentredPosX = (x, width, childWidth, childGap, columns) =>
     (width - ((columns - 1) * childGap + columns * childWidth)) / 2 + x;
 
@@ -20,15 +19,15 @@ const getCentredPosY = (y, height, childHeight, childGap, rows) =>
     (height - ((rows - 1) * childGap + rows * childHeight)) / 2 + y;
 
 
-const getRelativeSize = (parentSize: IRectSize, part: number): IRectSize =>
+const getSize = (parentSize: IRectSize, rows, columns, gap: number): IRectSize =>
     ({
-        width: parentSize.width * part,
-        height: parentSize.height * part
+        width: (parentSize.width - (columns + 1) * 1.5 * gap) / columns,
+        height: (parentSize.height - (rows + 1) * 1.5 * gap) / rows,
     });
 
 export {
     getGrid,
-    getRelativeSize,
+    getSize,
     getCentredPosX,
     getCentredPosY
 }

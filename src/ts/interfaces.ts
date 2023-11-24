@@ -13,8 +13,16 @@ interface ICard {
     scale: number,
 }
 
+interface IText {
+    text: string,
+    fontSize: number,
+    width: number,
+    strokeWidth: number,
+}
+
 
 export type {
     IRectSize,
     ICard,
+    IText,
 }
