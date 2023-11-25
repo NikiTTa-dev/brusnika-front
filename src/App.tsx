@@ -6,6 +6,7 @@ import Grid from "./components/Grid.tsx";
 
 function App() {
     const [stage, setStage] = useState({scale: 1, x: 0, y: 0});
+    const [pointerPos, setPointerPos] = useState({x: 0, y: 0});
 
     const handleWheel = (e: any): void => {
         e.evt.preventDefault();
@@ -26,6 +27,9 @@ function App() {
             x: (stage.getPointerPosition().x / clampedScale - mousePointTo.x) * clampedScale,
             y: (stage.getPointerPosition().y / clampedScale - mousePointTo.y) * clampedScale
         });
+
+        setPointerPos(stage.getPointerPosition());
+        console.log(stage.getPointerPosition())
     };
 
 
@@ -38,9 +42,15 @@ function App() {
                scaleY={stage.scale}
                x={stage.x}
                y={stage.y}
+
         >
             <Layer>
-                <Grid width={width} height={height}/>
+                <Grid
+                    width={width}
+                    height={height}
+                    scale={stage.scale}
+                    pointerPos={pointerPos}
+                />
             </Layer>
         </Stage>
     )

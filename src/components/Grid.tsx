@@ -1,6 +1,6 @@
-import {DATA} from "../ts/consts.ts";
+import {DATA, width} from "../ts/consts.ts";
 import {FC, memo} from "react";
-import {ISize} from "../ts/interfaces.ts";
+import {IPos, ISize} from "../ts/interfaces.ts";
 import {
     getCentredPos,
     getColumns,
@@ -15,10 +15,9 @@ import {Group} from "react-konva";
 import Item from "./Item.tsx";
 
 
-const draw = (data: any, parentSize: ISize): any => {
+const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos): any => {
     if (!data) return;
 
-    console.log('draw')
     const columns = getColumns(data.length);
     const rows = getRows(data.length, columns);
     const gap = getGap(parentSize, columns);
@@ -27,19 +26,28 @@ const draw = (data: any, parentSize: ISize): any => {
 
     return data.map((item: any, index: number) => {
         const centredPos = getCentredPos(grid[index], parentSize, size, gap, columns, rows);
+        
         return (
-            <Group key={grid[index].key} x={centredPos.x} y={centredPos.y}>
+            <Group key={item.id} x={centredPos.x} y={centredPos.y}>
                 <Item
                     text={item.text}
                     size={size}
                     strokeWidth={getStrokeWidth(size.width)}
                     fontSize={getFontSize(size.width)}
                 />
-                {draw(item.children, size)}
+                {
+                    scale * parentSize.width >= width
+                    && pointerPos.x >= centredPos.x && pointerPos.x < centredPos.x + parentSize.width / 2
+                    && pointerPos.y >= centredPos.y && pointerPos.y < centredPos.y + parentSize.height / 2
+                    && draw(item.children, size, scale, pointerPos)
+                }
             </Group>
         )
     });
 }
 
-const Grid: FC<ISize> = ({width, height}) => draw(DATA, {width, height});
+const Grid: FC = ({width, height, scale, pointerPos}) =>
+    draw(DATA, {width, height}, scale, pointerPos);
+
+
 export default memo(Grid);
