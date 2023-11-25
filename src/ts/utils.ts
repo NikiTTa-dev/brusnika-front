@@ -1,34 +1,44 @@
-import {IRectSize} from "./interfaces.ts";
+import {IPos, ISize} from "./interfaces.ts";
 
-const getGrid = (rows: number, columns: number, size: IRectSize, gap: number) => {
-    const cards = [];
+const getGrid = (rows: number, columns: number, size: ISize, gap: number): IPos[] => {
+    const grid = [];
     for (let row = 0; row < rows; row++) {
         for (let col = 0; col < columns; col++) {
-            const x = col * (size.width + gap);
-            const y = row * (size.height + gap);
-            cards.push({key: row - col, x, y});
+            grid.push({
+                key: row - col,
+                x: col * (size.width + gap),
+                y: row * (size.height + gap)
+            });
         }
     }
-    return cards
+    return grid
 };
 
-const getCentredPosX = (x, width, childWidth, childGap, columns) =>
-    (width - ((columns - 1) * childGap + columns * childWidth)) / 2 + x;
+const getCentredPos = (pos: IPos, parentSize: ISize, childSize: ISize, gap: number, columns: number, rows: number): IPos => ({
+    x: (parentSize.width - ((columns - 1) * gap + columns * childSize.width)) / 2 + pos.x,
+    y: (parentSize.height - ((rows - 1) * gap + rows * childSize.height)) / 2 + pos.y
+});
 
-const getCentredPosY = (y, height, childHeight, childGap, rows) =>
-    (height - ((rows - 1) * childGap + rows * childHeight)) / 2 + y;
+const getColumns = (amount: number): number => Math.ceil(Math.sqrt(amount));
+const getRows = (amount: number, columns: number): number => Math.ceil(amount / columns);
+const getStrokeWidth = (width: number): number => Math.min(width / 60, 1);
+const getFontSize = (width: number): number => width / 35;
 
+const getGap = (parentSize: ISize, columns: number): number => 0.05 * parentSize.width / columns;
 
-const getSize = (parentSize: IRectSize, rows, columns, gap: number): IRectSize =>
-    ({
-        width: (parentSize.width - (columns + 1) * 1.5 * gap) / columns,
-        height: (parentSize.height - (rows + 1) * 1.5 * gap) / rows,
-    });
+const getSize = (parentSize: ISize, rows: number, columns: number, gap: number): ISize => ({
+    width: (parentSize.width - (columns + 1) * 1.5 * gap) / columns,
+    height: (parentSize.height - (rows + 1) * 1.5 * gap) / rows,
+});
 
 export {
     getGrid,
     getSize,
-    getCentredPosX,
-    getCentredPosY
+    getColumns,
+    getStrokeWidth,
+    getFontSize,
+    getRows,
+    getGap,
+    getCentredPos
 }
 

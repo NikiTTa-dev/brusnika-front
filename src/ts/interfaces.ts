@@ -1,16 +1,19 @@
-interface IRectSize {
+interface IPos {
+    key?: number,
+    x: number,
+    y: number
+}
+
+interface ISize {
     width: number,
     height: number
 }
 
 interface ICard {
-    x?: number,
-    y?: number,
-    size: IRectSize,
+    size: ISize,
     text: string,
     strokeWidth: number,
     fontSize: number,
-    scale: number,
 }
 
 interface IText {
@@ -22,7 +25,8 @@ interface IText {
 
 
 export type {
-    IRectSize,
+    IPos,
+    ISize,
     ICard,
     IText,
 }
