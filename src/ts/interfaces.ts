@@ -9,7 +9,13 @@ interface ISize {
     height: number
 }
 
-interface ICard {
+interface IGrid {
+    parentSize: ISize,
+    scale: number,
+    pointerPos: IPos
+}
+
+interface IItem {
     size: ISize,
     text: string,
     strokeWidth: number,
@@ -27,6 +33,7 @@ interface IText {
 export type {
     IPos,
     ISize,
-    ICard,
+    IGrid,
+    IItem,
     IText,
 }

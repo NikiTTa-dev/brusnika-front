@@ -1,4 +1,5 @@
 import {IPos, ISize} from "./interfaces.ts";
+import {width} from "./consts.ts";
 
 const getGrid = (rows: number, columns: number, size: ISize, gap: number): IPos[] => {
     const grid = [];
@@ -19,6 +20,11 @@ const getCentredPos = (pos: IPos, parentSize: ISize, childSize: ISize, gap: numb
     y: (parentSize.height - ((rows - 1) * gap + rows * childSize.height)) / 2 + pos.y
 });
 
+const getAbsolutePos = (pos: IPos, parentPos: IPos): IPos => ({
+    x: parentPos.x + pos.x,
+    y: parentPos.y + pos.y
+})
+
 const getColumns = (amount: number): number => Math.ceil(Math.sqrt(amount));
 const getRows = (amount: number, columns: number): number => Math.ceil(amount / columns);
 const getStrokeWidth = (width: number): number => Math.min(width / 60, 1);
@@ -31,6 +37,10 @@ const getSize = (parentSize: ISize, rows: number, columns: number, gap: number):
     height: (parentSize.height - (rows + 1) * 1.5 * gap) / rows,
 });
 
+const isScaled = (scale: number, parentSize: ISize): boolean => scale * parentSize.width >= width;
+const isHovered = (pointerPos: IPos, pos: IPos, size: ISize): boolean => pointerPos.x >= pos.x && pointerPos.x <= pos.x + size.width
+    && pointerPos.y >= pos.y && pointerPos.y <= pos.y + size.height;
+
 export {
     getGrid,
     getSize,
@@ -39,6 +49,9 @@ export {
     getFontSize,
     getRows,
     getGap,
-    getCentredPos
+    getCentredPos,
+    getAbsolutePos,
+    isScaled,
+    isHovered,
 }
 

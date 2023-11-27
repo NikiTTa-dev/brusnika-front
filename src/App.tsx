@@ -5,7 +5,7 @@ import Grid from "./components/Grid.tsx";
 
 
 function App() {
-    const [stage, setStage] = useState({scale: 1, x: 0, y: 0});
+    const [stageState, setStageState] = useState({scale: 1, x: 0, y: 0});
     const [pointerPos, setPointerPos] = useState({x: 0, y: 0});
 
     const handleWheel = (e: any): void => {
@@ -22,33 +22,61 @@ function App() {
         const newScale = e.evt.deltaY < 0 ? oldScale * scaleBy : oldScale / scaleBy;
         const clampedScale = Math.max(minScale, newScale);
 
-        setStage({
+        setStageState({
             scale: clampedScale,
             x: (stage.getPointerPosition().x / clampedScale - mousePointTo.x) * clampedScale,
             y: (stage.getPointerPosition().y / clampedScale - mousePointTo.y) * clampedScale
         });
+    };
 
-        setPointerPos(stage.getPointerPosition());
-        console.log(stage.getPointerPosition())
+    const handleMouseMove = (e: any): void => {
+        const stage = e.target.getStage();
+        const pos = stage.getPointerPosition();
+        const scale = stageState.scale;
+
+        // Получаем актуальные позиции сцены
+        const stageX = stage.x();
+        const stageY = stage.y();
+
+        // Вычисляем позицию курсора относительно сцены при учете масштаба
+        setPointerPos({
+            x: (pos.x - stageX) / scale,
+            y: (pos.y - stageY) / scale,
+        });
+    };
+
+    const handleDragEnd = (e: any): void => {
+        const stage = e.target.getStage();
+        const pos = stage.getPointerPosition();
+        const scale = stageState.scale;
+        const stageX = stageState.x + stage.x(); // учитываем смещение сцены
+        const stageY = stageState.y + stage.y(); // учитываем смещение сцены
+
+        // Пересчитываем координаты курсора с учетом смещения сцены
+        setPointerPos({
+            x: (pos.x - stageX) / scale,
+            y: (pos.y - stageY) / scale,
+        });
     };
 
 
     return (
-        <Stage width={width}
-               height={height}
-               draggable
-               onWheel={handleWheel}
-               scaleX={stage.scale}
-               scaleY={stage.scale}
-               x={stage.x}
-               y={stage.y}
-
+        <Stage
+            x={stageState.x}
+            y={stageState.y}
+            width={width}
+            height={height}
+            scaleX={stageState.scale}
+            scaleY={stageState.scale}
+            draggable
+            onDragEnd={handleDragEnd}
+            onMouseMove={handleMouseMove}
+            onWheel={handleWheel}
         >
             <Layer>
                 <Grid
-                    width={width}
-                    height={height}
-                    scale={stage.scale}
+                    parentSize={{width, height}}
+                    scale={stageState.scale}
                     pointerPos={pointerPos}
                 />
             </Layer>

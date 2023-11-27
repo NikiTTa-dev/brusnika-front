@@ -1,7 +1,8 @@
-import {DATA, width} from "../ts/consts.ts";
+import {DATA} from "../ts/consts.ts";
 import {FC, memo} from "react";
-import {IPos, ISize} from "../ts/interfaces.ts";
+import {IGrid, IPos, ISize} from "../ts/interfaces.ts";
 import {
+    getAbsolutePos,
     getCentredPos,
     getColumns,
     getFontSize,
@@ -9,13 +10,13 @@ import {
     getGrid,
     getRows,
     getSize,
-    getStrokeWidth
+    getStrokeWidth, isHovered, isScaled
 } from "../ts/utils.ts";
 import {Group} from "react-konva";
 import Item from "./Item.tsx";
 
 
-const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos): any => {
+const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos, parentPos: IPos): any => {
     if (!data) return;
 
     const columns = getColumns(data.length);
@@ -25,10 +26,11 @@ const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos): an
     const grid = getGrid(rows, columns, size, gap);
 
     return data.map((item: any, index: number) => {
-        const centredPos = getCentredPos(grid[index], parentSize, size, gap, columns, rows);
-        
+        const pos = getCentredPos(grid[index], parentSize, size, gap, columns, rows);
+        const absolutePos = getAbsolutePos(pos, parentPos);
+
         return (
-            <Group key={item.id} x={centredPos.x} y={centredPos.y}>
+            <Group key={item.id} x={pos.x} y={pos.y}>
                 <Item
                     text={item.text}
                     size={size}
@@ -36,18 +38,16 @@ const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos): an
                     fontSize={getFontSize(size.width)}
                 />
                 {
-                    scale * parentSize.width >= width
-                    && pointerPos.x >= centredPos.x && pointerPos.x < centredPos.x + parentSize.width / 2
-                    && pointerPos.y >= centredPos.y && pointerPos.y < centredPos.y + parentSize.height / 2
-                    && draw(item.children, size, scale, pointerPos)
+                    isScaled(scale, parentSize) && isHovered(pointerPos, absolutePos, size)
+                    && draw(item.children, size, scale, pointerPos, absolutePos)
                 }
             </Group>
         )
     });
 }
 
-const Grid: FC = ({width, height, scale, pointerPos}) =>
-    draw(DATA, {width, height}, scale, pointerPos);
+const Grid: FC<IGrid> = ({parentSize, scale, pointerPos}) =>
+    draw(DATA, parentSize, scale, pointerPos, {x: 0, y: 0});
 
 
 export default memo(Grid);
