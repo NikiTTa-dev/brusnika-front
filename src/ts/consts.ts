@@ -1,17 +1,45 @@
 const width: number = window.innerWidth;
 const height: number = window.innerHeight;
-const backgroundColor: string = '#fff2f0';
-const borderColor: string = '#ff634f';
-const fontColor: string = 'black';
+const backgroundColor: string = '#23212C';
+const borderColor: string = 'rgba(113,112,118,0.5)';
+const borderColorEmployee: string = '#01A2A4';
+const borderColorVacancy: string = '#4371E6';
+const fontColor: string = '#F2F2F2';
+const secondaryFontColor: string = '#878787';
 const fontFamily: string = 'Halvar Breitschrift';
 
+enum Type {
+    Employee = 'Сотрудник',
+    Vacancy = 'Вакансия'
+}
 
-const generate = (amount: number, name: string, children: any[]) => {
-    // if (!children) return [];
 
+const generate = (amount: number, name: string, childrenGroups: any[]) => {
     const lst = [];
     for (let i = 0; i < amount; i++) {
-        lst.push({text: `${name} ${i + 1}`, children});
+        lst.push({
+            id: `${Math.trunc(Math.random() * 100)}`,
+            name: `${name} ${i + 1}`,
+            categoryName: 'string',
+            positions: amount !== 7 ? [
+                {
+                    id: `${Math.trunc(Math.random() * 100)}`,
+                    roleName: 'Архитектор',
+                    workType: 'Бизнес',
+                    type: 'Сотрудник',
+                    firstName: 'Иван',
+                    lastName: 'Иванов',
+                    patronymic: 'Иванович',
+                },
+                {
+                    id: `${Math.trunc(Math.random() * 100)}`,
+                    roleName: 'Начальник отдела',
+                    workType: 'Сервис',
+                    type: 'Вакансия',
+                }
+            ] : null,
+            childrenGroups
+        });
     }
 
     return lst;
@@ -22,191 +50,11 @@ const DATA = generate(
     7, 'Филиал', generate(
         6, 'Подразделение', generate(
             2, 'Отдел', generate(
-                20, 'Сотрудник', []
+                30, 'Группа', []
             )
         )
     )
 );
-
-// const DATA = [
-//     {
-//         id: 0,
-//         text: 'Филиал 1',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: [
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                 ]
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: [
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                 ]
-//             },
-//             {
-//                 text: 'Подразделение 3',
-//                 children: [
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                     {
-//                         text: 'Отдел 1',
-//                         children: generate(10, 'Сотрудник', null)
-//                     },
-//                 ]
-//             },
-//         ]
-//     },
-//     {
-//         id: 1,
-//         text: 'Филиал 2',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             }
-//         ]
-//     },
-//     {
-//         id: 3,
-//         text: 'Филиал 3',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 3',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 3',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 3',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 3',
-//                 children: null
-//             },
-//         ]
-//     },
-//     {
-//         text: 'Филиал 4',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             }
-//         ]
-//     },
-//     {
-//         text: 'Филиал 5',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             }
-//         ]
-//     },
-//     {
-//         text: 'Филиал 6',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             }
-//         ]
-//     },
-//     {
-//         text: 'Филиал 7',
-//         children: [
-//             {
-//                 text: 'Подразделение 1',
-//                 children: null
-//             },
-//             {
-//                 text: 'Подразделение 2',
-//                 children: null
-//             }
-//         ]
-//     },
-// ];
 
 
 export {
@@ -214,7 +62,11 @@ export {
     height,
     backgroundColor,
     borderColor,
+    borderColorEmployee,
+    borderColorVacancy,
     fontColor,
+    secondaryFontColor,
     fontFamily,
     DATA,
+    Type
 }

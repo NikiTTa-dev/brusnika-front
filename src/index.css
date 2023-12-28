@@ -20,5 +20,11 @@ body {
     place-items: center;
     min-width: 320px;
     min-height: 100vh;
-    background: #F2F2F2;
+    /*background: #F2F2F2;*/
+    background: #23212C;
+    cursor: grab;
+}
+
+body.grabbing {
+    cursor: grabbing;
 }

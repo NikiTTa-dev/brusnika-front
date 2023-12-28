@@ -1,29 +1,43 @@
 import {Group, Rect} from "react-konva";
 import {FC} from "react";
 import {IItem} from "../ts/interfaces.ts";
-import {backgroundColor, borderColor} from "../ts/consts.ts";
+import {
+    backgroundColor,
+    borderColor,
+    borderColorEmployee,
+    borderColorVacancy,
+    Type
+} from "../ts/consts.ts";
 import MyText from "./MyText.tsx";
+import PositionInfo from "./PositionInfo.tsx";
 
-const Item: FC<IItem> = ({text, size, strokeWidth, fontSize}) => {
+const Item: FC<IItem> = ({content, size, strokeWidth, fontSize, type}) => {
     const {width, height} = size;
+    const leftTextMargin = 0.04 * width;
 
     return (
         <Group>
             <Rect
                 width={width}
                 height={height}
-                stroke={borderColor}
+                stroke={type === Type.Employee ? borderColorEmployee : type === Type.Vacancy ? borderColorVacancy : borderColor}
                 strokeWidth={strokeWidth}
                 fill={backgroundColor}
             />
-            {
-                <MyText
-                    text={text}
-                    fontSize={fontSize}
-                    width={width}
-                    strokeWidth={strokeWidth}
-                />
-            }
+            <MyText
+                x={leftTextMargin}
+                text={content.name ?? content.roleName}
+                fontSize={fontSize}
+                width={width}
+                strokeWidth={strokeWidth}
+            />
+            <PositionInfo
+                x={leftTextMargin}
+                content={content}
+                size={size}
+                strokeWidth={strokeWidth}
+                fontSize={fontSize}
+            />
         </Group>
     );
 };

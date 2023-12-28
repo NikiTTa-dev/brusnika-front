@@ -27,14 +27,14 @@ const getAbsolutePos = (pos: IPos, parentPos: IPos): IPos => ({
 
 const getColumns = (amount: number): number => Math.ceil(Math.sqrt(amount));
 const getRows = (amount: number, columns: number): number => Math.ceil(amount / columns);
-const getStrokeWidth = (width: number): number => Math.min(width / 60, 1);
+const getStrokeWidth = (scale: number): number => Math.min(3 / scale, 2);
 const getFontSize = (width: number): number => width / 35;
 
 const getGap = (parentSize: ISize, columns: number): number => 0.05 * parentSize.width / columns;
 
 const getSize = (parentSize: ISize, rows: number, columns: number, gap: number): ISize => ({
-    width: (parentSize.width - (columns + 1) * 1.5 * gap) / columns,
-    height: (parentSize.height - (rows + 1) * 1.5 * gap) / rows,
+    width: (parentSize.width * 0.95 - (columns + 1) * gap) / columns,
+    height: (parentSize.height * 0.95 - (rows + 1) * gap) / rows,
 });
 
 const isScaled = (scale: number, parentSize: ISize): boolean => scale * parentSize.width >= width;

@@ -17,12 +17,22 @@ interface IGrid {
 
 interface IItem {
     size: ISize,
-    text: string,
+    content: any,
     strokeWidth: number,
     fontSize: number,
+    type: string
+}
+
+interface IInfo {
+    x: number,
+    size: ISize,
+    content: any,
+    strokeWidth: number,
+    fontSize: number
 }
 
 interface IText {
+    x: number,
     text: string,
     fontSize: number,
     width: number,
@@ -36,4 +46,5 @@ export type {
     IGrid,
     IItem,
     IText,
+    IInfo,
 }

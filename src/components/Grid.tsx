@@ -24,22 +24,26 @@ const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos, par
     const gap = getGap(parentSize, columns);
     const size = getSize(parentSize, rows, columns, gap);
     const grid = getGrid(rows, columns, size, gap);
+    const fontSize = getFontSize(size.width);
+    const strokeWidth = getStrokeWidth(scale);
 
     return data.map((item: any, index: number) => {
         const pos = getCentredPos(grid[index], parentSize, size, gap, columns, rows);
         const absolutePos = getAbsolutePos(pos, parentPos);
+        let height = size.height;
 
         return (
             <Group key={item.id} x={pos.x} y={pos.y}>
                 <Item
-                    text={item.text}
-                    size={size}
-                    strokeWidth={getStrokeWidth(size.width)}
-                    fontSize={getFontSize(size.width)}
+                    content={item}
+                    size={{width: size.width, height}}
+                    strokeWidth={strokeWidth}
+                    fontSize={fontSize}
+                    type={item.type}
                 />
                 {
                     isScaled(scale, parentSize) && isHovered(pointerPos, absolutePos, size)
-                    && draw(item.children, size, scale, pointerPos, absolutePos)
+                    && draw(item?.positions ? [...item.positions, ...item.childrenGroups] : item.childrenGroups, size, scale, pointerPos, absolutePos)
                 }
             </Group>
         )

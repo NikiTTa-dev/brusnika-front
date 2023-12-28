@@ -45,6 +45,8 @@ function App() {
         });
     };
 
+    const handleDragStart = (): boolean => document.body.classList.toggle('grabbing');
+
     const handleDragEnd = (e: any): void => {
         const stage = e.target.getStage();
         const pos = stage.getPointerPosition();
@@ -57,6 +59,7 @@ function App() {
             x: (pos.x - stageX) / scale,
             y: (pos.y - stageY) / scale,
         });
+        document.body.classList.toggle('grabbing');
     };
 
 
@@ -69,6 +72,7 @@ function App() {
             scaleX={stageState.scale}
             scaleY={stageState.scale}
             draggable
+            onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             onMouseMove={handleMouseMove}
             onWheel={handleWheel}

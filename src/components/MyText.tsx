@@ -4,13 +4,12 @@ import Konva from "konva";
 import {IText} from "../ts/interfaces.ts";
 import {backgroundColor, fontColor, fontFamily} from "../ts/consts.ts";
 
-const MyText: FC<IText> = ({text, fontSize, width, strokeWidth}) => {
-    const leftMargin = 0.04 * width;
-    const padding = 0.02 * width;
+const MyText: FC<IText> = ({x, text, fontSize, width, strokeWidth}) => {
+    const padding = 0.03 * width;
     const textWidth = new Konva.Text({text, fontSize, fontFamily}).getTextWidth();
 
     return (
-        <Group x={leftMargin} y={-strokeWidth / 2}>
+        <Group x={x} y={-strokeWidth / 2}>
             <Rect
                 y={-strokeWidth / 4}
                 width={textWidth + 2 * padding}
