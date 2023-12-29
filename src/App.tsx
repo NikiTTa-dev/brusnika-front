@@ -1,7 +1,8 @@
 import {Layer, Stage} from 'react-konva';
 import {height, width} from "./ts/consts.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Grid from "./components/Grid.tsx";
+import Loading from "./components/Loading/Loading.tsx";
 
 
 function App() {
@@ -62,29 +63,49 @@ function App() {
         document.body.classList.toggle('grabbing');
     };
 
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/companystructure')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error')
+                }
+                return response.json();
+            })
+            .then(data => setData(data))
+            .then(() => setLoading(false))
+            .catch(err => console.error(err.message))
+    }, []);
+
+    if (isLoading) return <Loading/>
 
     return (
-        <Stage
-            x={stageState.x}
-            y={stageState.y}
-            width={width}
-            height={height}
-            scaleX={stageState.scale}
-            scaleY={stageState.scale}
-            draggable
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            onMouseMove={handleMouseMove}
-            onWheel={handleWheel}
-        >
-            <Layer>
-                <Grid
-                    parentSize={{width, height}}
-                    scale={stageState.scale}
-                    pointerPos={pointerPos}
-                />
-            </Layer>
-        </Stage>
+        <>
+            <Stage
+                x={stageState.x}
+                y={stageState.y}
+                width={width}
+                height={height}
+                scaleX={stageState.scale}
+                scaleY={stageState.scale}
+                draggable
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                onMouseMove={handleMouseMove}
+                onWheel={handleWheel}
+            >
+                <Layer>
+                    <Grid
+                        data={data}
+                        parentSize={{width, height}}
+                        scale={stageState.scale}
+                        pointerPos={pointerPos}
+                    />
+                </Layer>
+            </Stage>
+        </>
     )
 }
 

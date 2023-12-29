@@ -1,4 +1,3 @@
-import {DATA} from "../ts/consts.ts";
 import {FC, memo} from "react";
 import {IGrid, IPos, ISize} from "../ts/interfaces.ts";
 import {
@@ -50,8 +49,8 @@ const draw = (data: any, parentSize: ISize, scale: number, pointerPos: IPos, par
     });
 }
 
-const Grid: FC<IGrid> = ({parentSize, scale, pointerPos}) =>
-    draw(DATA, parentSize, scale, pointerPos, {x: 0, y: 0});
+const Grid: FC<IGrid> = ({data, parentSize, scale, pointerPos}) =>
+    draw(data, parentSize, scale, pointerPos, {x: 0, y: 0});
 
 
 export default memo(Grid);

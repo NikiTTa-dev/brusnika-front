@@ -10,6 +10,7 @@ interface ISize {
 }
 
 interface IGrid {
+    data: any,
     parentSize: ISize,
     scale: number,
     pointerPos: IPos
