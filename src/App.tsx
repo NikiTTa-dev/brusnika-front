@@ -74,7 +74,7 @@ function App() {
                 }
                 return response.json();
             })
-            .then(data => setData(data))
+            .then(data => setData(data.groups))
             .then(() => setLoading(false))
             .catch(err => console.error(err.message))
     }, []);

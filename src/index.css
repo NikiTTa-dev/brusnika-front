@@ -1,5 +1,7 @@
+@import "./font/stylesheet.css";
+
 :root {
-    font-family: Arial, sans-serif;
+    font-family: "Halvar Breitschrift", sans-serif;
     line-height: 1.5;
     font-weight: 400;
     color-scheme: light dark;
