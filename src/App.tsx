@@ -67,7 +67,7 @@ function App() {
     const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8080/companystructure')
+        fetch('http://localhost:7033/companystructure')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error')
