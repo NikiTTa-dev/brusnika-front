@@ -67,7 +67,7 @@ function App() {
     const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8080/companystructure')
+        fetch('http://24procards.ru:8080/companystructure')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error')
